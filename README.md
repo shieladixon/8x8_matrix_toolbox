@@ -8,3 +8,4 @@ A good starting point is 8x8-template, which handles the necessary multiplexing 
 
 The hardware assembly instructions are included here (pdf). That file includes an explanation of multiplexing and why that's necessary, along with some simple BASIC code to test your display and get started.
 
+If you've arrived here randomly and are wondering what this is all about, the 8x8 matrix module for RC2014 is available here:
