@@ -3,6 +3,11 @@
 \ 
 \ 	for RC2014's bubble display module 
 \ 	This version adjusted and tested on Minstrel the Forth (Jupiter Ace)
+\   To run on RC2014 (tested using DXForth) you may need to define the out word before running this, 
+\   ie type directly or add this line to the file: 
+\ 	: out pc! ;
+
+
 
 
 00 constant row_port
@@ -62,7 +67,7 @@ create twos 1 c, 2 c, 4 c, 8 c, 16 c, 32 c, 64 c, 128 c,
 		
 
 \ example (infinite) program loop
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\ \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 		
 : display
 				begin
