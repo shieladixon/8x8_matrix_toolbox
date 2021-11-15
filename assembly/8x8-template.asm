@@ -70,10 +70,10 @@ wait_key:
 ; perhaps switch these lines with:
 ;			call clear_buffer1
 			
-;setup_smiley:
-;			ld hl,smiley
-;			ld de,buffer1
-;			call copy_buffer
+setup_smiley:
+			ld hl,smiley
+			ld de,buffer1
+			call copy_buffer
 			; source: HL, destination: DE
 					
 					
