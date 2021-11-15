@@ -66,12 +66,22 @@ wait_key:
 
 				
 			
+; when you've tried the smiley,
+; perhaps switch these lines with:
+;			call clear_buffer1
 			
-setup_smiley:
-			ld hl,smiley
-			ld de,buffer1
-			call copy_buffer
-					; source: HL, destination: DE
+;setup_smiley:
+;			ld hl,smiley
+;			ld de,buffer1
+;			call copy_buffer
+			; source: HL, destination: DE
+					
+					
+					
+					
+					
+			; make sure that whatever we want to start with is copied into the 8-bit matrix buffer
+			; after this, we just work with buffer1, this cascade is done during the main matrix multiplex loop		
 					
 			ld IY,buffer1
 			call matrix_copy
@@ -102,13 +112,24 @@ main:
 ; don't put a loop in here, 
 ; do as much as you need to do in one 'frame' and return
 
+; manipulate the data in buffer1
+; or copy from another buffer into buffer1
+; buffer1 is 64 bytes consisting of CELL and NOCELL
+
+; note the utilities: 
+; copy_buffer
+; plot
+; unplot
+; peek
+
+
 main_program_loop:
 
 
 
 		
 				; do your stuff here
-
+				
 				
 				
 				
@@ -245,9 +266,21 @@ peek:		; bc = y & x,  zero-based
 
 
 
+copy_buffer:
+		; source: HL, destination: DE
+		;LD (DE),(HL), then increments DE, HL, and decrements BC) until BC=0.
+		ld bc,BUFFERLENGTH
+		ldir
+		ret
 
-
-
+clear_buffer1:
+		ld de,buffer1
+		ld b,64
+		ld a,NOCELL
+cb1_lp	ld (de),a
+		inc de
+		djnz cb1_lp
+		ret
 
 
 
@@ -461,12 +494,6 @@ not0	ld a,(hl)
 ; subroutines - general utilities
 
 
-copy_buffer
-		; source: HL, destination: DE
-		;LD (DE),(HL), then increments DE, HL, and decrements BC) until BC=0.
-		ld bc,BUFFERLENGTH
-		ldir
-		ret
 
 
 
