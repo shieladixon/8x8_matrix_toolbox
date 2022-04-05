@@ -236,8 +236,8 @@ create jiffyclock 0 c, 0 c, 0 c, 0 c,
 	3 mins dispval
 
 	
-	5000 0 do
+	begin
 		clinc
 		flushdb
-	loop
+	0 until
 ;
