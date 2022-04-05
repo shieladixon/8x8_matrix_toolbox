@@ -198,6 +198,28 @@ create jiffyclock 0 c, 0 c, 0 c, 0 c,
 
 
 
+: settime
+	." Set time..." cr
+ 	begin
+		cr
+		." Hours:"
+		query number
+	until
+	
+	dup 12 > if
+		12 -
+	then
+	
+	jiffyclock 3 + c!
+	
+ 	begin
+		cr
+		." Minutes:"
+		query number
+	until
+	
+	jiffyclock 2 + c!
+;
 
 
 
@@ -205,10 +227,7 @@ create jiffyclock 0 c, 0 c, 0 c, 0 c,
 	
 	fast
 	
-	( set time here )
-	( todo: write routine for user input )
-	04 jiffyclock 3 + c!
-	08 jiffyclock 2 + c!
+	settime
 	
 	cr cr
 	baseline
