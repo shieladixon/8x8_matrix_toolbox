@@ -15,6 +15,7 @@ include jiffy.f
 01 constant on_time		
  
  
+create inbuff 0 c, 0 c, 0 c, 0 c, 0 c,
 create display_buffer	0 c, 0 c, 0 c, 0 c, 0 c, 0 c, 0 c, 0 c, 	
 create twos 1 c, 2 c, 4 c, 8 c, 16 c, 32 c, 64 c, 128 c, 
 create ltor 128 c, 64 c, 32 c,  16 c, 8 c, 4 c, 2 c, 1 c, 
@@ -132,15 +133,42 @@ variable current_column
 ;
 
 
-
+: settime 
+	cr ." Set time..." 
+	
+	begin
+		cr
+		." Hours:"
+		inbuff 2 accept
+		inbuff swap
+		number?
+	until
+	drop
+	
+	dup 12 > if
+		12 -
+	then
+	
+	jiffyclock 3 + c!
+	
+	begin
+		cr
+		." Minutes:"
+		inbuff 2 accept
+		inbuff swap
+		number?
+	until
+	drop
+	
+	jiffyclock 2 + c!
+;
 
 : bincl
 
 	0 jiffyclock c!
 	0 jiffyclock 1 + c!
-	57 jiffyclock 2 + c!
-	8 jiffyclock 3 + c!
-
+	settime
+	
 	cr cr
 	baseline
 	
