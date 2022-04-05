@@ -1,13 +1,18 @@
 \ 	8x8 Matrix Toolbox
 \ 	S Dixon https://peacockmedia.software
 \ 
-\ 	for RC2014's bubble display module 
+\ 	for RC2014's 8x8 Matrix 
 \ 	This version adjusted and tested on Minstrel the Forth (Jupiter Ace)
-\   To run on RC2014 (tested using DXForth) you may need to define the out word before running this, 
-\   ie type directly or add this line to the file: 
-\ 	: out pc! ;
+\   and calibrated for 6.5Mhz and NTSC
+\ 	to calibrate for other configurations, use the number indicated in clinc
+\ 
+\ 
+\ 	For easy data entry you can type using a modern keyboard
+\ 	or simply paste the code using the Minstrel USB keyboard / terminal adaptor: 
+\ 	https://peacockmedia.software/RC2014/minstrelkb/
 
-
+\ 	NB, the Minstrel / Ace doesn't understand comments like this. 
+\ 	leave them out.
 
 
 00 constant row_port
@@ -28,13 +33,13 @@ create display_buffer	60 c, 66 c, 137 c, 181 c, 133 c, 181 c, 66 c, 60 c,
 
 create twos 1 c, 2 c, 4 c, 8 c, 16 c, 32 c, 64 c, 128 c, 
 
-: power2 ( x -- r )  				\ 2 to the power of x, useful for selecting bits
+: power2 ( x -- r )  				( 2 to the power of x, useful for selecting bits )
 				twos + c@		 
 ; 
 
 
 : sendDataToRow ( d r -- )	
-				power2		\ convert row from 0-7 to 1-128. 2 to the power of what is sent		
+				power2		 ( convert row from 0-7 to 1-128. 2 to the power of what is sent )		
 				row_port out
 				data_port out
 ;
@@ -52,16 +57,11 @@ create twos 1 c, 2 c, 4 c, 8 c, 16 c, 32 c, 64 c, 128 c,
 : flushdb
 				8 0 do 
 					\ i is 0 - 7 
-
-					display_buffer i + c@			\ get data from buffer at pos i
-					i 								\ our digit #
-		
+					display_buffer i + c@			
+					i 								
 					sendDataToRow
-
-					on_time pause					\ delay before presenting next digit
-
-					0 i sendDataToRow				\ send 0 to row - prevents ghosting
-		
+					on_time pause					
+					0 i sendDataToRow				
 				loop
 ;
 		
